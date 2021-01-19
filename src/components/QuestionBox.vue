@@ -42,7 +42,6 @@ export default {
       shuffledAnswers: [],
     };
   },
-
   computed: {
     answers() {
       // Use 'this' to access a data prop
@@ -60,7 +59,6 @@ export default {
       this.shuffleAnswers();
     },
   },
-
   methods: {
     // On click function to get index of selected answer and save it in data
     selectAnswer(index) {
@@ -75,6 +73,11 @@ export default {
       // use shuffle method from lodash, tell it which array we want to shuffle
       this.shuffledAnswers = _.shuffle(answers);
     },
+  },
+  mounted() {
+    // To shuffle the answers for the first question when component mounts
+    // After that the answers will be shuffled every time the question changes
+    this.shuffleAnswers();
   },
 };
 </script>
