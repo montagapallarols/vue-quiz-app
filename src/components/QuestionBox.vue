@@ -20,7 +20,9 @@
         >
       </b-list-group>
 
-      <b-button variant="primary" href="#">Submit</b-button>
+      <b-button variant="primary" @click="submitAnswer">
+        Submit
+      </b-button>
       <b-button @click="next" variant="success" href="#">Next</b-button>
     </b-jumbotron>
   </div>
@@ -34,6 +36,7 @@ export default {
   props: {
     currentQuestion: Object,
     next: Function,
+    increment: Function,
   },
   // Save index of selected answer
   data() {
@@ -64,6 +67,16 @@ export default {
     selectAnswer(index) {
       this.selectedIndex = index;
       // console.log(index);
+    },
+    submitAnswer() {
+      let isCorrect = false;
+
+      if (this.selectedIndex === this.correctIndex) {
+        isCorrect = true;
+      }
+
+      // We need to pass the correct answer as prop so we can update the counter in header
+      this.increment(isCorrect);
     },
     shuffleAnswers() {
       let answers = [
