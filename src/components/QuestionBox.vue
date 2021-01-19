@@ -28,6 +28,8 @@
 
 <!-- We have to reference the props here in order for the props data to be displayed -->
 <script>
+import _ from "lodash";
+
 export default {
   props: {
     currentQuestion: Object,
@@ -37,21 +39,41 @@ export default {
   data() {
     return {
       selectedIndex: null,
+      shuffledAnswers: [],
     };
   },
+
   computed: {
     answers() {
       // Use 'this' to access a data prop
       let answers = [...this.currentQuestion.incorrect_answers];
       answers.push(this.currentQuestion.correct_answer);
+      // We join correct answers with incorrect answer inside same array
       return answers;
     },
   },
+  // It also takes an object of functions like computed/methods, but here we can watch for changes
+  watch: {
+    currentQuestion() {
+      // Every timet the question changes, we set the index back to null & shuffle the answers
+      this.selectedIndex = null;
+      this.shuffleAnswers();
+    },
+  },
+
   methods: {
     // On click function to get index of selected answer and save it in data
     selectAnswer(index) {
       this.selectedIndex = index;
       // console.log(index);
+    },
+    shuffleAnswers() {
+      let answers = [
+        ...this.currentQuestion.incorrect_answers,
+        this.currentQuestion.correct_answer,
+      ];
+      // use shuffle method from lodash, tell it which array we want to shuffle
+      this.shuffledAnswers = _.shuffle(answers);
     },
   },
 };
@@ -64,7 +86,7 @@ export default {
 }
 
 .list-group-item:hover {
-  background-color: #eff7e1;
+  background-color: lightgrey;
   cursor: pointer;
 }
 
