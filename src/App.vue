@@ -4,7 +4,8 @@
     <b-container class="bv-example-row">
       <b-row>
         <b-col sm="6" offset="3">
-          <QuestionBox />
+          <QuestionBox :currentQuestion="questions[index]" />
+          <!-- The question I want to pass equals my questions array and the current question -->
         </b-col>
       </b-row>
     </b-container>
@@ -24,6 +25,7 @@ export default {
   data() {
     return {
       questions: [],
+      index: 0,
     };
   },
   mounted: function() {
