@@ -4,7 +4,12 @@
     <b-container class="bv-example-row">
       <b-row>
         <b-col sm="6" offset="3">
-          <QuestionBox :currentQuestion="questions[index]" :next="next" />
+          <!-- Add if statement to avoid undefined error -->
+          <QuestionBox
+            v-if="questions.length"
+            :currentQuestion="questions[index]"
+            :next="next"
+          />
           <!-- The question I want to pass equals my questions array and the current question -->
         </b-col>
       </b-row>
