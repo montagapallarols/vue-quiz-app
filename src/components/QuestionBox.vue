@@ -20,7 +20,12 @@
         >
       </b-list-group>
 
-      <b-button variant="primary" @click="submitAnswer">
+      <!-- Disable submit button if user hasn't selected an answer yet -->
+      <b-button
+        variant="primary"
+        @click="submitAnswer"
+        :disabled="selectedIndex === null || answered"
+      >
         Submit
       </b-button>
       <b-button @click="next" variant="success" href="#">Next</b-button>
@@ -44,6 +49,7 @@ export default {
       selectedIndex: null,
       correctIndex: null,
       shuffledAnswers: [],
+      answered: false,
     };
   },
   computed: {
@@ -60,6 +66,7 @@ export default {
     currentQuestion() {
       // Every timet the question changes, we set the index back to null & shuffle the answers
       this.selectedIndex = null;
+      this.answered = false;
       this.shuffleAnswers();
     },
   },
@@ -75,6 +82,7 @@ export default {
       if (this.selectedIndex === this.correctIndex) {
         isCorrect = true;
       }
+      this.answered = true;
 
       // We need to pass the correct answer as prop so we can update the counter in header
       this.increment(isCorrect);
