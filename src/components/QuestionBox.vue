@@ -13,7 +13,15 @@
           v-for="(answer, index) in shuffledAnswers"
           :key="index"
           @click.prevent="selectAnswer(index)"
-          :class="[selectedIndex === index ? 'selected' : '']"
+          :class="[
+            !answered && selectedIndex === index
+              ? 'selected'
+              : answered && correctIndex === index
+              ? 'correct'
+              : answered && selectedIndex === index && correctIndex !== index
+              ? 'incorrect'
+              : '',
+          ]"
         >
           <!-- Bind css class to item above -->
           {{ answer }}</b-list-group-item
