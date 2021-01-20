@@ -1,16 +1,18 @@
 <template>
   <div id="app">
-    <Header />
+    <!-- Pass props to header to update counter -->
+    <Header :numCorrect="numCorrect" :numTotal="numTotal" />
     <b-container class="bv-example-row">
       <b-row>
         <b-col sm="6" offset="3">
           <!-- Add if statement to avoid undefined error -->
+          <!-- The question I want to pass equals the current question in questions array -->
           <QuestionBox
             v-if="questions.length"
             :currentQuestion="questions[index]"
             :next="next"
+            :increment="increment"
           />
-          <!-- The question I want to pass equals my questions array and the current question -->
         </b-col>
       </b-row>
     </b-container>
@@ -31,11 +33,20 @@ export default {
     return {
       questions: [],
       index: 0,
+      numCorrect: 0,
+      numTotal: 0,
     };
   },
   methods: {
     next() {
       this.index++;
+    },
+    increment(isCorrect) {
+      // keep track of total correct answers & total submitted answers
+      if (isCorrect) {
+        this.numCorrect++;
+      }
+      this.numTotal++;
     },
   },
   mounted: function() {

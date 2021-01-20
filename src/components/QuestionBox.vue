@@ -10,9 +10,9 @@
 
       <b-list-group>
         <b-list-group-item
-          v-for="(answer, index) in answers"
+          v-for="(answer, index) in shuffledAnswers"
           :key="index"
-          @click="selectAnswer(index)"
+          @click.prevent="selectAnswer(index)"
           :class="[selectedIndex === index ? 'selected' : '']"
         >
           <!-- Bind css class to item above -->
@@ -42,6 +42,7 @@ export default {
   data() {
     return {
       selectedIndex: null,
+      correctIndex: null,
       shuffledAnswers: [],
     };
   },
@@ -85,6 +86,9 @@ export default {
       ];
       // use shuffle method from lodash, tell it which array we want to shuffle
       this.shuffledAnswers = _.shuffle(answers);
+      this.correctIndex = this.shuffledAnswers.indexOf(
+        this.currentQuestion.correct_answer
+      );
     },
   },
   mounted() {
